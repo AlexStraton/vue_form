@@ -19,7 +19,23 @@
       <input v-model="terms" type="checkbox" required />
       <label>Please accept terms and conditions</label>
     </div>
+
+    <div>
+      <input type="checkbox" value="Alex" v-model="names" />
+      <label for="#">Alex</label>
+    </div>
+
+    <div>
+      <input type="checkbox" value="Anna" v-model="names" />
+      <label for="#">Anna</label>
+    </div>
+
+    <div>
+      <input type="checkbox" value="Simona" v-model="names" />
+      <label for="#">Simona</label>
+    </div>
   </form>
+  <p>{{ names }}</p>
 </template>
 
 <script>
@@ -30,6 +46,7 @@ export default {
       password: "",
       role: "Full stack developer",
       terms: false,
+      names: [],
     };
   },
 };
