@@ -14,7 +14,11 @@
       <option value="DevOps & Cloud">DevOps & Cloud</option>
       <option value="UX/UI designer">UX/UI designer</option>
     </select>
-    <p>{{ role }}</p>
+
+    <div class="terms">
+      <input v-model="terms" type="checkbox" required />
+      <label>Please accept terms and conditions</label>
+    </div>
   </form>
 </template>
 
@@ -25,6 +29,7 @@ export default {
       email: "",
       password: "",
       role: "Full stack developer",
+      terms: false,
     };
   },
 };
@@ -57,5 +62,12 @@ select {
   border: none;
   border-bottom: 1px solid #ddd;
   color: #555;
+}
+input[type="checkbox"] {
+  display: inline-block;
+  top: 2px;
+  width: 16px;
+  position: relative;
+  margin: 0 10px 0 0;
 }
 </style>
