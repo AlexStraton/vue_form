@@ -1,9 +1,12 @@
 <template>
-  <form>
+  <form @submit.prevent="handleSubmit">
     <label>Email</label>
+    <div class="error" v-if="errors.email">{{ errors.email }}</div>
+
     <input v-model="email" type="email" required />
     <label>Password</label>
     <input v-model="password" type="password" required />
+    <div class="error" v-if="errors.password">{{ errors.password }}</div>
 
     <label>number</label>
     <input v-model="number" type="number" required />
@@ -25,10 +28,14 @@
       :key="skill">
       {{ skill }}
     </div>
+    <div class="error" v-if="errors.skills">{{ errors.skills }}</div>
 
     <div class="terms">
       <input v-model="terms" type="checkbox" required />
       <label>Please accept terms and conditions</label>
+    </div>
+    <div class="submit">
+      <button>Create Account</button>
     </div>
   </form>
 </template>
@@ -45,6 +52,7 @@ export default {
       names: [],
       tempSkill: "",
       skills: [],
+      errors: { password: "", email: "", skills: "" },
     };
   },
   methods: {
@@ -58,6 +66,18 @@ export default {
     handleClick(index) {
       console.log(index, "index");
       this.skills.splice(index, 1);
+    },
+    handleSubmit(e) {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      this.errors.password =
+        this.password.length < 5
+          ? (this.errors.password = "Password must be longer than 5 characters")
+          : "";
+      this.errors.email = !emailRegex.test(this.email)
+        ? "Please enter a valid email address"
+        : "";
+      this.errors.skills =
+        this.skills.length === 0 ? "Please enter at least one skill" : "";
     },
   },
 };
@@ -109,5 +129,20 @@ input[type="checkbox"] {
   font-weight: bold;
   color: #777;
   cursor: pointer;
+}
+button {
+  background: #0b6dff;
+  border: 0;
+  padding: 10px 20px;
+  display: block;
+  margin: auto;
+  color: white;
+  border-radius: 20px;
+}
+.error {
+  color: #ff0062;
+  margin-top: 10px;
+  font-size: 0.8em;
+  font-weight: bold;
 }
 </style>
