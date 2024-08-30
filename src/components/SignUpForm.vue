@@ -5,8 +5,9 @@
     <label>Password</label>
     <input v-model="password" type="password" required />
 
-    <label>Email</label>
-    <input v-model="email" type="email" required />
+    <label>number</label>
+    <input v-model="number" type="number" required />
+
     <label>Role</label>
     <select class="" v-model="role">
       <option value="Full stack developer">Full stack developer</option>
@@ -15,27 +16,21 @@
       <option value="UX/UI designer">UX/UI designer</option>
     </select>
 
+    <label>Your skills </label>
+    <input type="text" @keypress="addSkill" v-model="tempSkill" />
+    <div
+      @click="handleClick(index)"
+      class="skills"
+      v-for="(skill, index) in skills"
+      :key="skill">
+      {{ skill }}
+    </div>
+
     <div class="terms">
       <input v-model="terms" type="checkbox" required />
       <label>Please accept terms and conditions</label>
     </div>
-
-    <div>
-      <input type="checkbox" value="Alex" v-model="names" />
-      <label for="#">Alex</label>
-    </div>
-
-    <div>
-      <input type="checkbox" value="Anna" v-model="names" />
-      <label for="#">Anna</label>
-    </div>
-
-    <div>
-      <input type="checkbox" value="Simona" v-model="names" />
-      <label for="#">Simona</label>
-    </div>
   </form>
-  <p>{{ names }}</p>
 </template>
 
 <script>
@@ -44,10 +39,26 @@ export default {
     return {
       email: "",
       password: "",
+      number: 0,
       role: "Full stack developer",
       terms: false,
       names: [],
+      tempSkill: "",
+      skills: [],
     };
+  },
+  methods: {
+    addSkill(event) {
+      if (event.key === "Enter") {
+        this.skills.push(this.tempSkill);
+        this.tempSkill = "";
+        this.skills = [...new Set(this.skills)];
+      }
+    },
+    handleClick(index) {
+      console.log(index, "index");
+      this.skills.splice(index, 1);
+    },
   },
 };
 </script>
@@ -86,5 +97,17 @@ input[type="checkbox"] {
   width: 16px;
   position: relative;
   margin: 0 10px 0 0;
+}
+.skills {
+  display: inline-block;
+  margin: 20px 10px 0 0;
+  padding: 6px 12px;
+  background: #eee;
+  border-radius: 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: #777;
+  cursor: pointer;
 }
 </style>
